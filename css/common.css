@@ -1,0 +1,277 @@
+/* ============================================================
+ * common.css —— 公共组件样式（多页面复用）
+ * 包含：顶部条 / 站点头部 / 主导航 / 按钮 / 卡片 / 底部
+ * ============================================================ */
+
+/* ========== 1. 顶部欢迎条 ========== */
+.top-bar {
+    background: var(--text-primary);
+    color: #C9CDD4;
+    font-size: 13px;
+}
+
+.top-bar__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 36px;
+}
+
+.top-bar__welcome {
+    margin: 0;
+}
+
+.top-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-bar__link {
+    color: #C9CDD4;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.top-bar__link:hover {
+    color: #fff;
+}
+
+.top-bar__divider {
+    color: #4E5969;
+}
+
+/* ========== 2. 站点头部 ========== */
+.site-header {
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: var(--header-height);
+}
+
+.site-header__logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.site-header__logo-img {
+    height: 50px;
+    width: auto;
+    border-radius: var(--radius-sm);
+}
+
+.site-header__logo-fallback {
+    display: none;
+    font-size: 28px;
+    font-weight: 700;
+    /* linear-gradient 渐变文字（CSS3 渐变要求） */
+    background: linear-gradient(135deg, var(--primary) 0%, #722ED1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+}
+
+.site-header__search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 560px;
+}
+
+.site-header__search-input {
+    flex: 1;
+}
+
+.site-header__search-btn {
+    flex-shrink: 0;
+}
+
+.site-header__hotwords {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.site-header__hotword:hover {
+    color: var(--primary);
+}
+
+/* ========== 3. 主导航 ========== */
+.main-nav {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: var(--header-height);
+    z-index: 99;
+}
+
+.main-nav__inner {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav__menu {
+    flex: 1;
+    background: transparent !important;
+    border-bottom: none !important;
+}
+
+/* 覆盖 Element Plus 导航默认样式，使其在渐变背景上反白 */
+.main-nav__menu .el-menu-item,
+.main-nav__menu .el-sub-menu__title {
+    color: #fff !important;
+    border-bottom: none !important;
+}
+
+.main-nav__menu .el-menu-item:hover,
+.main-nav__menu .el-sub-menu__title:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.main-nav__menu .el-menu-item.is-active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+}
+
+/* ========== 4. 区块通用样式（block-section） ========== */
+.block-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.block-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.block-section__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 12px;
+    border-left: 4px solid var(--primary);
+}
+
+.block-section__more {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.block-section__more:hover {
+    color: var(--primary);
+    transform: translateX(4px);
+}
+
+/* ========== 5. 按钮通用（在 Element Plus 基础上微调） ========== */
+.el-button {
+    transition: all var(--transition-fast) ease;
+}
+
+.el-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ========== 6. 页面底部 footer ========== */
+.site-footer {
+    background: #1D2129;
+    color: #86909C;
+    margin-top: 48px;
+}
+
+.site-footer__inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding: 48px 16px 32px;
+}
+
+.site-footer__heading {
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.site-footer__list li {
+    margin-bottom: 10px;
+}
+
+.site-footer__list a {
+    color: #86909C;
+    font-size: 13px;
+}
+
+.site-footer__list a:hover {
+    color: #fff;
+}
+
+.site-footer__contact {
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.site-footer__copyright {
+    border-top: 1px solid #2C3038;
+    padding: 20px 16px;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* ========== 7. 响应式：平板 / 移动端 ========== */
+@media (max-width: 992px) {
+    .site-header__inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 16px;
+        gap: 16px;
+    }
+    .site-header__search {
+        order: 3;
+        max-width: 100%;
+        width: 100%;
+    }
+    .site-header__hotwords {
+        display: none;
+    }
+    .site-footer__inner {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .top-bar__welcome {
+        display: none;
+    }
+    .site-footer__inner {
+        grid-template-columns: 1fr;
+    }
+}

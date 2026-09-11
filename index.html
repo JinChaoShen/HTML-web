@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="墨香书阁 - 在线书店，提供文学、科幻、历史、计算机等各类图书">
+    <title>墨香书阁 - 在线书店</title>
+
+    <!-- ========== 第三方库 CDN 引入（任务书：优先 CDN） ========== -->
+    <!-- Vue3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- Element Plus 样式 + 组件库 + 中文语言包 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <script src="https://unpkg.com/element-plus/dist/index.full.min.js"></script>
+    <script src="https://unpkg.com/element-plus/dist/locale/zh-cn.min.js"></script>
+    <!-- ECharts 数据可视化 -->
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <!-- Element Plus 图标库 -->
+    <script src="https://unpkg.com/@element-plus/icons-vue/dist/index.iife.min.js"></script>
+    <!-- Axios 网络请求（选做模块） -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- ========== 自定义样式（基础→公共→页面 三级加载） ========== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/page/index.css">
+</head>
+
+<body>
+    <!--
+      ============================================================
+      墨香书阁 · 首页 index.html
+      技术模块覆盖：
+        模块1 HTML5语义化：header/nav/main/section/article/aside/footer
+        模块2 CSS3布局：Flexbox + Grid + linear-gradient + box-shadow + transition + animation
+        模块3 CSS选择器：标签/类/ID/后代/交集/并集/伪类/伪元素/属性/子代
+        模块4 JS基础：let/const、数组/对象、函数、事件、条件/循环
+        模块5 DOM操作：动态列表渲染、classList切换、表单验证
+        模块6 BOM与本地存储：localStorage 收藏
+        模块7 Canvas/ECharts + 多媒体：折线图/饼图 + video
+        模块8 Element Plus：导航(折叠)/轮播/卡片/表单
+      ============================================================
+    -->
+    <div id="app">
+
+        <!-- ======= 顶部欢迎条（secondary bar） ======= -->
+        <div class="top-bar">
+            <div class="container top-bar__inner">
+                <p class="top-bar__welcome">欢迎来到墨香书阁，让阅读成为一种生活方式</p>
+                <div class="top-bar__actions">
+                    <a href="login.html" class="top-bar__link">登录</a>
+                    <span class="top-bar__divider">|</span>
+                    <a href="register.html" class="top-bar__link">注册</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======= 站点头部 header ======= -->
+        <header class="site-header">
+            <div class="container site-header__inner">
+                <!-- 网站 Logo -->
+                <a href="index.html" class="site-header__logo">
+                    <!-- TODO: 替换为本地 assets/images/logo.png -->
+                    <img src="https://picsum.photos/seed/moxiang-logo/120/50" alt="墨香书阁 Logo"
+                        class="site-header__logo-img"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span class="site-header__logo-fallback">墨香书阁</span>
+                </a>
+
+                <!-- 搜索表单（Form + Input，含表单验证） -->
+                <form class="site-header__search" role="search" @submit.prevent="handleSearch">
+                    <el-input v-model="searchKeyword" placeholder="请输入书名 / 作者 / 关键词" class="site-header__search-input"
+                        clearable>
+                        <template #prefix>
+                            <el-icon>
+                                <Search />
+                            </el-icon>
+                        </template>
+                    </el-input>
+                    <el-button type="primary" native-type="submit" class="site-header__search-btn">
+                        搜索
+                    </el-button>
+                </form>
+
+                <!-- 热门搜索词 -->
+                <div class="site-header__hotwords">
+                    <span>热门：</span>
+                    <a href="list.html?keyword=三体" class="site-header__hotword">三体</a>
+                    <a href="list.html?keyword=活着" class="site-header__hotword">活着</a>
+                    <a href="list.html?keyword=人类简史" class="site-header__hotword">人类简史</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ======= 主导航 nav（Element Plus NavMenu，支持移动端折叠） ======= -->
+        <nav class="main-nav">
+            <div class="container main-nav__inner">
+                <el-menu mode="horizontal" :default-active="activeMenu" class="main-nav__menu"
+                    @select="handleMenuSelect">
+                    <el-menu-item index="home">
+                        <el-icon>
+                            <House />
+                        </el-icon>
+                        <span>首页</span>
+                    </el-menu-item>
+                    <el-sub-menu index="category">
+                        <template #title>
+                            <el-icon>
+                                <Grid />
+                            </el-icon>
+                            <span>图书分类</span>
+                        </template>
+                        <el-menu-item v-for="cat in categories" :key="cat.id" :index="cat.id">
+                            {{ cat.name }}
+                        </el-menu-item>
+                    </el-sub-menu>
+                    <el-menu-item index="new">
+                        <el-icon>
+                            <Star />
+                        </el-icon>
+                        <span>新书上架</span>
+                    </el-menu-item>
+                    <el-menu-item index="rank">
+                        <el-icon>
+                            <Trophy />
+                        </el-icon>
+                        <span>畅销排行</span>
+                    </el-menu-item>
+                    <el-menu-item index="auth">
+                        <el-icon>
+                            <User />
+                        </el-icon>
+                        <span>注册 / 登录</span>
+                    </el-menu-item>
+                    <el-menu-item index="about">
+                        <el-icon>
+                            <InfoFilled />
+                        </el-icon>
+                        <span>关于我们</span>
+                    </el-menu-item>
+                </el-menu>
+            </div>
+        </nav>
+
+        <main>
+            <!-- ======= 三海报轮播 Banner（Element Plus Carousel） ======= -->
+            <section class="banner-section" aria-label="首页轮播推荐">
+                <el-carousel height="420px" :interval="4000" arrow="hover" indicator-position="outside"
+                             class="banner-section__carousel">
+                    <el-carousel-item v-for="(banner, idx) in banners" :key="idx">
+                        <!-- TODO: 替换为 assets/images/banner/banner-0X.webp（本地海报资源） -->
+                        <div class="banner-slide" :style="{ background: banner.bg }">
+                            <img :src="banner.img" :alt="banner.title"
+                                 class="banner-slide__img"
+                                 loading="eager">
+                            <div class="banner-slide__text">
+                                <h2 class="banner-slide__title">{{ banner.title }}</h2>
+                                <p class="banner-slide__desc">{{ banner.desc }}</p>
+                            </div>
+                        </div>
+                    </el-carousel-item>
+                </el-carousel>
+            </section>
+
+            <!-- ======= 主体内容区：左侧内容 + 右侧侧边栏 ======= -->
+            <div class="container main-body">
+
+                <div class="main-body__left">
+
+                    <!-- ====== 新书推荐（Card 网格） ====== -->
+                    <section class="block-section" aria-labelledby="recommend-title">
+                        <div class="block-section__header">
+                            <h2 id="recommend-title" class="block-section__title">
+                                <el-icon>
+                                    <MagicStick />
+                                </el-icon>
+                                新书推荐
+                            </h2>
+                            <a href="list.html?type=recommend" class="block-section__more">
+                                查看全部 <el-icon>
+                                    <ArrowRight />
+                                </el-icon>
+                            </a>
+                        </div>
+
+                        <!-- Grid 布局：响应式卡片网格 -->
+                        <div class="book-grid">
+                            <article v-for="book in recommendBooks" :key="book.id" class="book-card"
+                                :class="{ 'is-fav': isFav(book.id) }">
+                                <!-- 图书封面 -->
+                                <div class="book-card__cover">
+                                    <!-- TODO: 替换为 assets/images/books/{cover} -->
+                                    <img :src="getCoverUrl(book.cover)" :alt="book.title + ' 封面'" loading="lazy"
+                                        class="book-card__img">
+                                    <!-- 悬浮遮罩 -->
+                                    <div class="book-card__overlay">
+                                        <el-button size="small" @click="viewDetail(book)">
+                                            查看详情
+                                        </el-button>
+                                    </div>
+                                    <!-- 收藏按钮 -->
+                                    <button class="book-card__fav" @click="toggleFav(book.id)"
+                                        :title="isFav(book.id) ? '取消收藏' : '加入收藏'">
+                                        <el-icon :color="isFav(book.id) ? '#e63946' : '#999'">
+                                            <StarFilled />
+                                        </el-icon>
+                                    </button>
+                                </div>
+
+                                <!-- 图书信息 -->
+                                <div class="book-card__body">
+                                    <h3 class="book-card__title" :title="book.title">{{ book.title }}</h3>
+                                    <p class="book-card__author">{{ book.author }} 著</p>
+                                    <p class="book-card__price">
+                                        <span class="book-card__price-now">¥{{ book.price.toFixed(2) }}</span>
+                                        <span class="book-card__price-old">¥{{ book.oldPrice.toFixed(2) }}</span>
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- ====== 分类筛选 + 动态图书列表 ====== -->
+                    <section class="block-section" aria-labelledby="new-title">
+                        <div class="block-section__header">
+                            <h2 id="new-title" class="block-section__title">
+                                <el-icon>
+                                    <Reading />
+                                </el-icon>
+                                全部图书
+                            </h2>
+                            <!-- 分类筛选标签（伪类 :hover / :nth-child 演示） -->
+                            <div class="filter-tabs">
+                                <button v-for="cat in [{id:'all',name:'全部'}, ...categories]" :key="cat.id"
+                                    class="filter-tabs__item" :class="{ 'is-active': activeCategory === cat.id }"
+                                    @click="activeCategory = cat.id">
+                                    {{ cat.name }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 动态列表：由 Vue v-for 渲染，非硬编码 -->
+                        <ul class="book-list">
+                            <li v-for="book in filteredBooks" :key="book.id" class="book-list__item">
+                                <img :src="getCoverUrl(book.cover)" :alt="book.title + ' 封面'" loading="lazy"
+                                    class="book-list__cover">
+                                <div class="book-list__info">
+                                    <h3 class="book-list__title">
+                                        <a :href="'detail.html?id=' + book.id">{{ book.title }}</a>
+                                    </h3>
+                                    <p class="book-list__meta">
+                                        <span>{{ book.author }}</span> ·
+                                        <span>{{ book.publisher }}</span> ·
+                                        <span>{{ book.date }}</span>
+                                    </p>
+                                    <p class="book-list__desc">{{ book.desc }}</p>
+                                    <p class="book-list__price">¥{{ book.price.toFixed(2) }}</p>
+                                </div>
+                                <div class="book-list__actions">
+                                    <el-button size="small" type="primary" @click="viewDetail(book)">查看详情</el-button>
+                                </div>
+                            </li>
+                            <!-- 空状态 -->
+                            <li v-if="filteredBooks.length === 0" class="book-list__empty">
+                                暂无该分类图书
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- ====== 数据统计（ECharts） ====== -->
+                    <section class="block-section" aria-labelledby="stats-title">
+                        <div class="block-section__header">
+                            <h2 id="stats-title" class="block-section__title">
+                                <el-icon>
+                                    <TrendCharts />
+                                </el-icon>
+                                书店数据统计
+                            </h2>
+                        </div>
+                        <div class="stats-grid">
+                            <div id="salesChart" class="stats-grid__chart"></div>
+                            <div id="categoryPie" class="stats-grid__chart"></div>
+                        </div>
+                    </section>
+
+                    <!-- ====== 多媒体区：视频推荐 ====== -->
+                    <section class="block-section" aria-labelledby="media-title">
+                        <div class="block-section__header">
+                            <h2 id="media-title" class="block-section__title">
+                                <el-icon>
+                                    <VideoPlay />
+                                </el-icon>
+                                店长推荐视频
+                            </h2>
+                        </div>
+                        <div class="media-video">
+                            <!-- TODO: 替换为 assets/media/video/book-recommend.mp4 -->
+                            <!-- 多 source 兼容：MP4 / WebM -->
+                            <video class="media-video__player" controls preload="metadata"
+                                poster="https://picsum.photos/seed/book-video-poster/800/450">
+                                <source src="assets/media/video/book-recommend.mp4" type="video/mp4">
+                                <source src="assets/media/video/book-recommend.webm" type="video/webm">
+                                您的浏览器不支持 video 标签，请升级浏览器。
+                            </video>
+                            <p class="media-video__caption">
+                                <el-icon>
+                                    <InfoFilled />
+                                </el-icon>
+                                本期店长推荐：《百年孤独》《人类简史》深度解读
+                            </p>
+                        </div>
+
+                        <!-- 音频：有声书片段 -->
+                        <div class="media-audio">
+                            <audio class="media-audio__player" controls>
+                                <!-- TODO: 替换为 assets/media/audio/intro.mp3 -->
+                                <source src="assets/media/audio/intro.mp3" type="audio/mpeg">
+                                <source src="assets/media/audio/intro.ogg" type="audio/ogg">
+                                您的浏览器不支持 audio 标签。
+                            </audio>
+                            <span class="media-audio__label">墨香书阁 · 每日一书 音频介绍</span>
+                        </div>
+                    </section>
+
+                    <!-- ====== 邮件订阅表单（Form 验证） ====== -->
+                    <section class="block-section subscribe-section" aria-labelledby="subscribe-title">
+                        <h2 id="subscribe-title" class="subscribe-section__title">订阅新书资讯</h2>
+                        <p class="subscribe-section__desc">留下您的邮箱，第一时间获取新书上架与优惠活动通知</p>
+                        <el-form ref="subscribeFormRef" :model="subscribeForm" :rules="subscribeRules"
+                            class="subscribe-section__form" @submit.prevent="handleSubscribe">
+                            <el-form-item prop="email">
+                                <el-input v-model="subscribeForm.email" placeholder="请输入您的邮箱" clearable size="large"
+                                    class="subscribe-section__input">
+                                    <template #prefix><el-icon>
+                                            <Message />
+                                        </el-icon></template>
+                                </el-input>
+                            </el-form-item>
+                            <el-form-item prop="phone">
+                                <el-input v-model="subscribeForm.phone" placeholder="请输入手机号（选填）" clearable size="large">
+                                    <template #prefix><el-icon>
+                                            <Phone />
+                                        </el-icon></template>
+                                </el-input>
+                            </el-form-item>
+                            <el-button type="primary" size="large" native-type="submit" class="subscribe-section__btn">
+                                立即订阅
+                            </el-button>
+                        </el-form>
+                    </section>
+
+                </div><!-- /.main-body__left -->
+
+                <!-- ======= 侧边栏 aside：畅销排行 ======= -->
+                <aside class="sidebar" aria-label="畅销排行榜">
+                    <div class="sidebar__widget">
+                        <h3 class="sidebar__title"><el-icon>
+                                <Trophy />
+                            </el-icon> 畅销榜 TOP 10</h3>
+                        <ol class="rank-list">
+                            <li v-for="(book, idx) in rankBooks" :key="book.id" class="rank-list__item"
+                                :class="{ 'rank-list__item--top': idx < 3 }">
+                                <span class="rank-list__no" :class="'rank-list__no--' + (idx + 1)">{{ idx + 1 }}</span>
+                                <a :href="'detail.html?id=' + book.id" class="rank-list__name">
+                                    {{ book.title }}
+                                </a>
+                                <span class="rank-list__price">¥{{ book.price.toFixed(2) }}</span>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- 回到顶部按钮 -->
+                    <el-backtop :right="40" :bottom="100" />
+                </aside>
+
+            </div><!-- /.main-body -->
+        </main>
+
+        <!-- ======= 页面底部 footer ======= -->
+        <footer class="site-footer">
+            <div class="container site-footer__inner">
+                <div class="site-footer__col">
+                    <h4 class="site-footer__heading">关于墨香</h4>
+                    <ul class="site-footer__list">
+                        <li><a href="about.html">关于我们</a></li>
+                        <li><a href="about.html#contact">联系方式</a></li>
+                        <li><a href="about.html#join">加入我们</a></li>
+                    </ul>
+                </div>
+                <div class="site-footer__col">
+                    <h4 class="site-footer__heading">帮助中心</h4>
+                    <ul class="site-footer__list">
+                        <li><a href="help.html#faq">常见问题</a></li>
+                        <li><a href="help.html#shipping">配送说明</a></li>
+                        <li><a href="help.html#refund">退换货政策</a></li>
+                    </ul>
+                </div>
+                <div class="site-footer__col">
+                    <h4 class="site-footer__heading">购物指南</h4>
+                    <ul class="site-footer__list">
+                        <li><a href="help.html#payment">支付方式</a></li>
+                        <li><a href="help.html#user-agreement">用户协议</a></li>
+                        <li><a href="help.html#invoice">发票说明</a></li>
+                    </ul>
+                </div>
+                <div class="site-footer__col">
+                    <h4 class="site-footer__heading">联系我们</h4>
+                    <p class="site-footer__contact">客服热线：400-888-8888</p>
+                    <p class="site-footer__contact">邮箱：service@moxiang.book</p>
+                    <p class="site-footer__contact">地址：江西省南昌市青山湖区墨香路 1 号</p>
+                </div>
+            </div>
+            <div class="site-footer__copyright">
+                <p>© 2026 墨香书阁 Moxiang Bookstore · Web前端设计与开发实训项目 · 仅供学习使用</p>
+            </div>
+        </footer>
+
+    </div><!-- /#app -->
+
+    <!-- ========== 自定义脚本（公共工具 → DOM封装 → 页面逻辑） ========== -->
+    <script src="js/common.js"></script>
+    <script src="js/dom.js"></script>
+    <script src="js/page/index.js"></script>
+</body>
+
+</html>
