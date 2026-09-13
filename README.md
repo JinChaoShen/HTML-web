@@ -4,7 +4,7 @@
 
 ## 一、项目介绍
 
-**墨香书阁** 是一个基于原生 HTML5 + CSS3 + JavaScript 构建的在线书店 Web 应用，综合运用 Element Plus 组件库、Vue3 响应式框架、ECharts 数据可视化等技术，实现了图书浏览、搜索、分类筛选、收藏、走马灯轮播、数据统计、多媒体播放等完整功能。
+**墨香书阁** 是一个基于原生 HTML5 + CSS3 + JavaScript 构建的在线书店 Web 应用，综合运用 Element Plus 组件库、Vue3 响应式框架和原生 Canvas，实现了图书浏览、搜索、分类筛选、收藏、走马灯轮播、数据统计、多媒体播放等完整功能。
 
 - **开发周期**：2026.9.7 — 2026.9.20
 - **开发人数**：1 人（独立完成）
@@ -19,7 +19,7 @@
 | 交互 | 原生 JavaScript (ES6+) | 表单验证、事件绑定、DOM 操作、localStorage |
 | 框架 | Vue 3 (CDN) | 响应式数据绑定、组件化渲染 |
 | UI 库 | Element Plus (CDN) | 导航菜单、轮播、卡片、表单、按钮、消息提示 |
-| 可视化 | ECharts | 销量折线图、分类占比饼图 |
+| 可视化 | 原生 Canvas | 畅销排行页销量折线图、分类占比环形图 |
 | 网络 | Axios（选做） | 预留开源 API 调用入口 |
 | 多媒体 | HTML5 audio / video | 书籍推荐视频、有声书片段 |
 
@@ -28,17 +28,20 @@
 ```
 Exam/
 ├── index.html              # 首页（项目入口）
+├── list.html               # 畅销排行页（Canvas 图表）
 ├── README.md               # 项目说明文档
 ├── css/
 │   ├── base.css            # 全局重置 + CSS 变量
 │   ├── common.css          # 公共组件（头部/导航/底部）
 │   └── page/
-│       └── index.css       # 首页专属样式
+│       ├── index.css       # 首页专属样式
+│       └── list.css        # 畅销排行页专属样式
 ├── js/
 │   ├── common.js           # 工具函数（表单验证/localStorage封装/时间格式化）
 │   ├── dom.js              # DOM 操作封装
 │   └── page/
-│       └── index.js        # 首页业务逻辑（Vue3 应用）
+│       ├── index.js        # 首页业务逻辑（Vue3 应用）
+│       └── list.js         # 畅销排行与 Canvas 绘图逻辑
 ├── assets/
 │   ├── images/             # 图片资源（banner / books / avatar / logo）
 │   ├── media/
@@ -54,7 +57,7 @@ Exam/
 2. **图书浏览与分类筛选**：按文学/科幻/历史/计算机等分类动态过滤
 3. **收藏功能**：收藏/取消收藏，localStorage 持久化，刷新后数据不丢失
 4. **图书搜索**：顶部搜索框，非空校验后跳转列表页
-5. **数据统计可视化**：ECharts 折线图（销量趋势）+ 饼图（分类占比）
+5. **畅销排行与 Canvas 图表**：`list.html` 动态渲染 TOP 10，并使用原生 Canvas 绘制销量折线图和分类占比环形图
 6. **多媒体播放**：书籍推荐视频 + 有声书音频
 7. **邮件订阅**：Element Plus Form 表单验证（邮箱正则、手机号正则）
 8. **响应式布局**：适配 PC / 平板 / 手机

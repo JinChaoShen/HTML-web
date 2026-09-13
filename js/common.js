@@ -161,7 +161,7 @@
             var lower = (account || '').toLowerCase();
             return users.find(function (u) {
                 return u.username.toLowerCase() === lower ||
-                       u.email.toLowerCase() === lower;
+                    u.email.toLowerCase() === lower;
             }) || null;
         },
 

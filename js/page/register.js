@@ -85,11 +85,11 @@
 
             const registerRules = {
                 username: [{ validator: validateUsername, trigger: 'blur' }],
-                email:    [{ validator: validateEmail, trigger: 'blur' }],
-                phone:    [{ validator: validatePhone, trigger: 'blur' }],
+                email: [{ validator: validateEmail, trigger: 'blur' }],
+                phone: [{ validator: validatePhone, trigger: 'blur' }],
                 password: [{ validator: validatePassword, trigger: 'blur' }],
                 confirmPassword: [{ validator: validateConfirm, trigger: 'blur' }],
-                agreed:   [{ validator: validateAgreed, trigger: 'change' }]
+                agreed: [{ validator: validateAgreed, trigger: 'change' }]
             };
 
             /** 提交注册 */

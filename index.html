@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="墨香书阁 - 在线书店，提供文学、科幻、历史、计算机等各类图书">
-    <title>墨香书阁 - 在线书店</title>
+    <meta name="description" content="夜合书舍 - 在线书店，提供文学、科幻、历史、计算机等各类图书">
+    <title>夜合书舍 - 在线书店</title>
 
 
     <!-- Vue3 -->
@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
     <script src="https://unpkg.com/element-plus/dist/index.full.min.js"></script>
     <script src="https://unpkg.com/element-plus/dist/locale/zh-cn.min.js"></script>
-    <!-- ECharts 数据可视化 -->
-    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
     <!-- Element Plus 图标库 -->
     <script src="https://unpkg.com/@element-plus/icons-vue/dist/index.iife.min.js"></script>
     <!-- Axios 网络请求（选做模块） -->
@@ -30,7 +28,7 @@
 <body>
     <!--
       ============================================================
-      墨香书阁 · 首页 index.html
+      夜合书舍 · 首页 index.html
       技术模块覆盖：
         模块1 HTML5语义化：header/nav/main/section/article/aside/footer
         模块2 CSS3布局：Flexbox + Grid + linear-gradient + box-shadow + transition + animation
@@ -38,7 +36,7 @@
         模块4 JS基础：let/const、数组/对象、函数、事件、条件/循环
         模块5 DOM操作：动态列表渲染、classList切换、表单验证
         模块6 BOM与本地存储：localStorage 收藏
-        模块7 Canvas/ECharts + 多媒体：折线图/饼图 + video
+        模块7 Canvas + 多媒体：折线图/饼图位于 list.html 畅销排行页
         模块8 Element Plus：导航(折叠)/轮播/卡片/表单
       ============================================================
     -->
@@ -47,7 +45,7 @@
         <!-- ======= 顶部欢迎条（secondary bar） ======= -->
         <div class="top-bar">
             <div class="container top-bar__inner">
-                <p class="top-bar__welcome">欢迎来到墨香书阁，让阅读成为一种生活方式</p>
+                <p class="top-bar__welcome">欢迎来到夜合书舍，让阅读成为一种生活方式</p>
                 <div class="top-bar__actions">
                     <!-- 未登录：显示登录/注册 -->
                     <template v-if="!loginUser">
@@ -76,10 +74,10 @@
                 <!-- 网站 Logo -->
                 <a href="index.html" class="site-header__logo">
                     <!-- TODO: 替换为本地 assets/images/logo.png -->
-                    <img src="https://picsum.photos/seed/moxiang-logo/120/50" alt="墨香书阁 Logo"
+                    <img src="https://picsum.photos/seed/yehe-logo/120/50" alt="夜合书舍 Logo"
                         class="site-header__logo-img"
                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <span class="site-header__logo-fallback">墨香书阁</span>
+                    <span class="site-header__logo-fallback">夜合书舍</span>
                 </a>
 
                 <!-- 搜索表单（Form + Input，含表单验证） -->
@@ -280,22 +278,6 @@
                         </ul>
                     </section>
 
-                    <!-- ====== 数据统计（ECharts） ====== -->
-                    <section class="block-section" aria-labelledby="stats-title">
-                        <div class="block-section__header">
-                            <h2 id="stats-title" class="block-section__title">
-                                <el-icon>
-                                    <TrendCharts />
-                                </el-icon>
-                                书店数据统计
-                            </h2>
-                        </div>
-                        <div class="stats-grid">
-                            <div id="salesChart" class="stats-grid__chart"></div>
-                            <div id="categoryPie" class="stats-grid__chart"></div>
-                        </div>
-                    </section>
-
                     <!-- ====== 多媒体区：视频推荐 ====== -->
                     <section class="block-section" aria-labelledby="media-title">
                         <div class="block-section__header">
@@ -331,7 +313,7 @@
                                 <source src="assets/media/audio/intro.ogg" type="audio/ogg">
                                 您的浏览器不支持 audio 标签。
                             </audio>
-                            <span class="media-audio__label">墨香书阁 · 每日一书 音频介绍</span>
+                            <span class="media-audio__label">夜合书舍 · 每日一书 音频介绍</span>
                         </div>
                     </section>
 
@@ -393,7 +375,7 @@
         <footer class="site-footer">
             <div class="container site-footer__inner">
                 <div class="site-footer__col">
-                    <h4 class="site-footer__heading">关于墨香</h4>
+                    <h4 class="site-footer__heading">关于夜合</h4>
                     <ul class="site-footer__list">
                         <li><a href="about.html">关于我们</a></li>
                         <li><a href="about.html#contact">联系方式</a></li>
@@ -419,12 +401,12 @@
                 <div class="site-footer__col">
                     <h4 class="site-footer__heading">联系我们</h4>
                     <p class="site-footer__contact">客服热线：400-888-8888</p>
-                    <p class="site-footer__contact">邮箱：service@moxiang.book</p>
+                    <p class="site-footer__contact">邮箱：service@yehe.book</p>
                     <p class="site-footer__contact">地址：江西省南昌市青山湖区墨香路 1 号</p>
                 </div>
             </div>
             <div class="site-footer__copyright">
-                <p>© 2026 墨香书阁 Moxiang Bookstore · Web前端设计与开发实训项目 · 仅供学习使用</p>
+                <p>© 2026 夜合书舍 Yehe Bookstore · Web前端设计与开发实训项目 · 仅供学习使用</p>
             </div>
         </footer>
 

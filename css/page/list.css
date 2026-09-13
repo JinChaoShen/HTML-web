@@ -1,0 +1,161 @@
+/* 畅销排行页：Canvas 图表与排行列表 */
+.ranking-page {
+    padding: 32px 0 56px;
+}
+
+.ranking-hero {
+    background: linear-gradient(135deg, #3E2C25 0%, #8E4A55 100%);
+    color: #FBF3E7;
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.ranking-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: auto;
+}
+
+.ranking-nav a {
+    color: var(--text-primary);
+    font-size: 15px;
+}
+
+.ranking-nav a:hover,
+.ranking-nav a[aria-current="page"] {
+    color: var(--primary);
+}
+
+.ranking-logo {
+    display: block;
+    font-size: 26px;
+    font-weight: 700;
+    font-family: "Noto Serif SC", Georgia, serif;
+    color: var(--primary);
+    letter-spacing: 4px;
+}
+
+.ranking-hero h1 {
+    font-family: "Noto Serif SC", Georgia, serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.ranking-hero p {
+    color: #F0DCD0;
+}
+
+.ranking-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.ranking-list {
+    counter-reset: ranking;
+}
+
+.ranking-list__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.ranking-list__item:last-child {
+    border-bottom: 0;
+}
+
+.ranking-list__number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+
+.ranking-list__item:nth-child(-n + 3) .ranking-list__number {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+}
+
+.ranking-list__cover {
+    width: 52px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+}
+
+.ranking-list__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ranking-list__title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.ranking-list__title a:hover {
+    color: var(--primary);
+}
+
+.ranking-list__meta {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.ranking-list__price {
+    color: var(--primary);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.canvas-chart {
+    width: 100%;
+    height: 300px;
+    display: block;
+    background: linear-gradient(180deg, #FDF8F1 0%, #F9EFE2 100%);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-top: 12px;
+    color: var(--text-regular);
+    font-size: 13px;
+}
+
+.chart-legend__item::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: var(--legend-color);
+}
+
+@media (max-width: 768px) {
+    .ranking-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ranking-hero {
+        padding: 28px 22px;
+    }
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="墨香书阁畅销排行，查看热门图书和销量统计">
+    <title>畅销排行 - 墨香书阁</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/page/list.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a href="index.html" class="site-header__logo">
+                <span class="ranking-logo">墨香书阁</span>
+            </a>
+            <nav aria-label="主导航" class="ranking-nav">
+                <a href="index.html">首页</a>
+                <a href="list.html?rank=top" aria-current="page">畅销排行</a>
+                <a href="login.html">登录</a>
+                <a href="register.html">注册</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="ranking-page">
+        <div class="container">
+            <section class="ranking-hero" aria-labelledby="ranking-title">
+                <h1 id="ranking-title">畅销排行</h1>
+                <p>根据近期阅读热度与销售数据，为你精选本周最受欢迎的图书。</p>
+            </section>
+
+            <div class="ranking-layout">
+                <section class="block-section" aria-labelledby="book-ranking-title">
+                    <div class="block-section__header">
+                        <h2 id="book-ranking-title" class="block-section__title">本周畅销 TOP 10</h2>
+                    </div>
+                    <ol id="rankingList" class="ranking-list" aria-live="polite"></ol>
+                </section>
+
+                <aside aria-label="销量数据图表">
+                    <section class="block-section" aria-labelledby="sales-chart-title">
+                        <div class="block-section__header">
+                            <h2 id="sales-chart-title" class="block-section__title">近六个月销量趋势</h2>
+                        </div>
+                        <canvas id="salesCanvas" class="canvas-chart" width="640" height="300">
+                            您的浏览器不支持 Canvas，请升级浏览器。
+                        </canvas>
+                        <div class="chart-legend" aria-label="销量图例">
+                            <span class="chart-legend__item" style="--legend-color:#B76E79">线上销量</span>
+                            <span class="chart-legend__item" style="--legend-color:#722ED1">门店销量</span>
+                        </div>
+                    </section>
+
+                    <section class="block-section" aria-labelledby="category-chart-title">
+                        <div class="block-section__header">
+                            <h2 id="category-chart-title" class="block-section__title">分类销售占比</h2>
+                        </div>
+                        <canvas id="categoryCanvas" class="canvas-chart" width="640" height="300">
+                            您的浏览器不支持 Canvas，请升级浏览器。
+                        </canvas>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p class="site-footer__copyright">© 2026 墨香书阁 · 让阅读成为一种生活方式</p>
+    </footer>
+
+    <script src="js/page/list.js"></script>
+</body>
+
+</html>

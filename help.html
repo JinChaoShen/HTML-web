@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="墨香书阁帮助中心，提供常见问题、配送、支付和售后说明">
+    <title>帮助中心 - 墨香书阁</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/page/info.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a href="index.html" class="site-header__logo">
+                <span class="info-logo">墨香书阁</span>
+            </a>
+            <nav class="info-nav" aria-label="页面导航">
+                <a href="index.html">首页</a>
+                <a href="list.html?rank=top">畅销排行</a>
+                <a href="about.html">关于我们</a>
+                <a href="help.html" aria-current="page">帮助中心</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="info-page">
+        <div class="container">
+            <section class="info-header" aria-labelledby="help-title">
+                <h1 id="help-title">帮助中心</h1>
+                <p>从选书、下单到收货，我们整理了常见问题和服务说明，帮助你安心享受阅读。</p>
+            </section>
+
+            <div class="info-grid">
+                <div>
+                    <section id="faq" class="block-section info-section" aria-labelledby="faq-title">
+                        <h2 id="faq-title">常见问题</h2>
+                        <div class="faq-list">
+                            <details>
+                                <summary>如何搜索和收藏图书？</summary>
+                                <p>在首页搜索框输入书名或作者即可查找图书。登录后点击图书卡片上的星标按钮，可以收藏或取消收藏。</p>
+                            </details>
+                            <details>
+                                <summary>注册后可以享受哪些服务？</summary>
+                                <p>注册后可以收藏图书、同步登录状态，并订阅新书资讯。账户信息仅用于本地演示数据保存。</p>
+                            </details>
+                            <details>
+                                <summary>如何查看订单进度？</summary>
+                                <p>当前项目为前端演示版本，订单查询功能尚未接入真实支付和物流系统。如需咨询，请联系客服。</p>
+                            </details>
+                            <details>
+                                <summary>遇到页面打不开怎么办？</summary>
+                                <p>请确认网络连接正常，并允许浏览器加载 CDN 资源。若使用本地文件打开，建议通过本地 Web 服务器访问。</p>
+                            </details>
+                        </div>
+                    </section>
+
+                    <section id="shipping" class="block-section info-section" aria-labelledby="shipping-title">
+                        <h2 id="shipping-title">配送说明</h2>
+                        <p>工作日 15:00 前完成的订单通常会在 1-2 个工作日内发出，偏远地区的配送时间可能略有延长。</p>
+                        <ul>
+                            <li>普通配送：预计 3-5 个工作日送达。</li>
+                            <li>节假日配送：以物流公司实际安排为准。</li>
+                            <li>收货时请检查外包装，如有明显破损请及时拍照并联系客服。</li>
+                        </ul>
+                    </section>
+
+                    <section id="refund" class="block-section info-section" aria-labelledby="refund-title">
+                        <h2 id="refund-title">退换货政策</h2>
+                        <p>图书应保持未使用、无折痕、无污损，并保留完整包装。签收后 7 日内可联系客服申请售后。</p>
+                        <p>因个人原因产生的退换货，寄回运费按照平台售后规则处理；质量问题由平台协助承担相应费用。</p>
+                    </section>
+                </div>
+
+                <aside class="block-section info-section" aria-labelledby="shopping-title">
+                    <h2 id="shopping-title">购物指南</h2>
+                    <div class="policy-list">
+                        <a href="#payment">支付方式</a>
+                        <a href="#user-agreement">用户协议</a>
+                        <a href="#invoice">发票说明</a>
+                    </div>
+                    <h3 id="payment">支付方式</h3>
+                    <p>演示项目暂不接入真实支付。正式上线后可根据实际业务接入微信支付、支付宝或银行卡支付。</p>
+                    <h3 id="user-agreement">用户协议</h3>
+                    <p>本网站内容仅用于 Web 前端课程项目演示，商品、价格和用户数据均为模拟信息。</p>
+                    <h3 id="invoice">发票说明</h3>
+                    <p>如需发票，请在订单备注中填写发票抬头和税号。演示版本暂不生成真实发票。</p>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer__inner">
+            <div class="site-footer__col">
+                <h2 class="site-footer__heading">关于墨香</h2>
+                <ul class="site-footer__list">
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="about.html#contact">联系方式</a></li>
+                    <li><a href="about.html#join">加入我们</a></li>
+                </ul>
+            </div>
+            <div class="site-footer__col">
+                <h2 class="site-footer__heading">帮助中心</h2>
+                <ul class="site-footer__list">
+                    <li><a href="help.html#faq">常见问题</a></li>
+                    <li><a href="help.html#shipping">配送说明</a></li>
+                    <li><a href="help.html#refund">退换货政策</a></li>
+                </ul>
+            </div>
+            <div class="site-footer__col">
+                <h2 class="site-footer__heading">联系我们</h2>
+                <p class="site-footer__contact">客服热线：400-888-8888</p>
+                <p class="site-footer__contact">邮箱：service@moxiang.book</p>
+            </div>
+        </div>
+        <div class="site-footer__copyright">
+            <p>© 2026 墨香书阁 Moxiang Bookstore · 仅供学习使用</p>
+        </div>
+    </footer>
+</body>
+
+</html>
