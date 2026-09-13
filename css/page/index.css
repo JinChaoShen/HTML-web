@@ -1,6 +1,6 @@
 /* ============================================================
- * page/index.css —— 首页专属样式
- * 包含：轮播 / 图书卡片 / 列表 / 统计图表 / 多媒体 / 订阅 / 侧边栏
+ * page/index.css —— 首页专属样式（文艺书店风）
+ * Banner / 图书卡片 / 列表 / 图表 / 多媒体 / 订阅 / 侧边栏
  * ============================================================ */
 
 /* ========== 1. 三海报轮播 Banner ========== */
@@ -20,7 +20,6 @@
     background-position: center;
 }
 
-/* 海报图片占位（TODO: 部署时替换为本地 assets/images/banner/banner-0X.webp） */
 .banner-slide__img {
     position: absolute;
     inset: 0;
@@ -30,50 +29,49 @@
     z-index: 0;
 }
 
-/* 半透明遮罩保证文字可读 */
+/* 暖色遮罩，营造复古氛围 */
 .banner-slide::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 100%);
+    background: linear-gradient(90deg,
+                rgba(62, 44, 37, 0.65) 0%,
+                rgba(62, 44, 37, 0.25) 100%);
     z-index: 1;
 }
 
 .banner-slide__text {
     position: relative;
     z-index: 2;
-    color: #fff;
+    color: #FBF3E7;
     text-align: center;
-    max-width: 600px;
+    max-width: 620px;
     padding: 0 24px;
-    animation: fadeInUp 0.8s ease both;
+    animation: fadeInUp 1s ease both;
 }
 
 .banner-slide__title {
-    font-size: 42px;
+    font-size: 46px;
     font-weight: 700;
-    margin-bottom: 16px;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 18px;
+    font-family: "Noto Serif SC", Georgia, serif;
+    letter-spacing: 6px;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
 }
 
 .banner-slide__desc {
     font-size: 18px;
     opacity: 0.92;
+    letter-spacing: 2px;
+    font-style: italic;
 }
 
-/* keyframes 动画 */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ========== 2. 主体布局：左主内容 + 右侧边栏 ========== */
+/* ========== 2. 主体布局 ========== */
 .main-body {
     display: flex;
     gap: 24px;
@@ -83,15 +81,14 @@
 
 .main-body__left {
     flex: 1;
-    min-width: 0; /* 防止 flex 子项溢出 */
+    min-width: 0;
 }
 
-/* ========== 3. 图书卡片网格（Grid 布局） ========== */
+/* ========== 3. 图书卡片网格 ========== */
 .book-grid {
     display: grid;
-    /* 响应式列数：auto-fit + minmax 自适应 */
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
+    gap: 22px;
 }
 
 .book-card {
@@ -103,11 +100,10 @@
     border: 1px solid var(--border-light);
 }
 
-/* :hover 伪类（任务书要求） */
 .book-card:hover {
-    transform: translateY(-6px);
-    /* box-shadow（任务书要求至少1处） */
+    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
+    border-color: var(--accent-light);
 }
 
 .book-card__cover {
@@ -128,11 +124,10 @@
     transform: scale(1.06);
 }
 
-/* 悬浮遮罩 */
 .book-card__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(62, 44, 37, 0.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,57 +135,50 @@
     transition: opacity var(--transition-base) ease;
 }
 
-.book-card:hover .book-card__overlay {
-    opacity: 1;
-}
+.book-card:hover .book-card__overlay { opacity: 1; }
 
 .book-card__fav {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 32px;
-    height: 32px;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 254, 252, 0.92);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform var(--transition-fast);
     z-index: 2;
+    box-shadow: var(--shadow-sm);
 }
 
-.book-card__fav:hover {
-    transform: scale(1.15);
-}
+.book-card__fav:hover { transform: scale(1.15); }
+.book-card.is-fav .book-card__fav { background: #FBE4E4; }
 
-.book-card.is-fav .book-card__fav {
-    background: #FFF0F0;
-}
-
-.book-card__body {
-    padding: 12px;
-}
+.book-card__body { padding: 14px; }
 
 .book-card__title {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 4px;
+    font-family: "Noto Serif SC", Georgia, serif;
 }
 
 .book-card__author {
     font-size: 12px;
     color: var(--text-secondary);
     margin-bottom: 8px;
+    font-style: italic;
 }
 
-.book-card__price {
-    margin-bottom: 10px;
-}
+.book-card__price { margin-bottom: 4px; }
 
 .book-card__price-now {
-    color: var(--danger);
-    font-size: 18px;
+    color: var(--primary);
+    font-size: 19px;
     font-weight: 700;
+    font-family: Georgia, serif;
 }
 
 .book-card__price-old {
@@ -200,38 +188,36 @@
     margin-left: 6px;
 }
 
-.book-card__add {
-    width: 100%;
-}
-
 /* ========== 4. 分类筛选标签 ========== */
 .filter-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
 }
 
 .filter-tabs__item {
-    padding: 6px 16px;
-    border-radius: 20px;
+    padding: 7px 18px;
+    border-radius: 22px;
     background: var(--bg-hover);
     color: var(--text-regular);
     font-size: 13px;
     transition: all var(--transition-fast);
     border: 1px solid transparent;
+    font-family: "Noto Serif SC", Georgia, serif;
 }
 
 .filter-tabs__item:hover {
     color: var(--primary);
-    border-color: var(--primary);
+    border-color: var(--primary-light);
 }
 
 .filter-tabs__item.is-active {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     color: #fff;
+    box-shadow: var(--shadow-sm);
 }
 
-/* ========== 5. 图书列表（横向条目） ========== */
+/* ========== 5. 图书列表 ========== */
 .book-list {
     display: flex;
     flex-direction: column;
@@ -240,30 +226,33 @@
 
 .book-list__item {
     display: flex;
-    gap: 16px;
-    padding: 16px;
+    gap: 18px;
+    padding: 18px;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-light);
     transition: box-shadow var(--transition-fast),
-                border-color var(--transition-fast);
+                border-color var(--transition-fast),
+                transform var(--transition-fast);
 }
 
-/* :nth-child 伪类（任务书要求） */
+/* 隔行暖色背景 */
 .book-list__item:nth-child(odd) {
-    background: #FAFBFC;
+    background: #FDF8F1;
 }
 
 .book-list__item:hover {
-    border-color: var(--primary-light);
-    box-shadow: var(--shadow-sm);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateX(4px);
 }
 
 .book-list__cover {
-    width: 80px;
-    height: 110px;
+    width: 84px;
+    height: 118px;
     object-fit: cover;
     border-radius: var(--radius-sm);
     flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
 }
 
 .book-list__info {
@@ -272,19 +261,19 @@
 }
 
 .book-list__title {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     margin-bottom: 6px;
+    font-family: "Noto Serif SC", Georgia, serif;
 }
 
-.book-list__title a:hover {
-    color: var(--primary);
-}
+.book-list__title a:hover { color: var(--primary); }
 
 .book-list__meta {
     font-size: 12px;
     color: var(--text-secondary);
     margin-bottom: 8px;
+    font-style: italic;
 }
 
 .book-list__desc {
@@ -294,15 +283,16 @@
 }
 
 .book-list__price {
-    color: var(--danger);
+    color: var(--primary);
     font-weight: 700;
-    font-size: 16px;
+    font-size: 17px;
+    font-family: Georgia, serif;
 }
 
 .book-list__actions {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
     flex-shrink: 0;
 }
@@ -311,9 +301,10 @@
     text-align: center;
     padding: 48px 0;
     color: var(--text-secondary);
+    font-style: italic;
 }
 
-/* ========== 6. 数据统计图表 ========== */
+/* ========== 6. 数据统计 ========== */
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -322,21 +313,20 @@
 
 .stats-grid__chart {
     height: 320px;
-    background: var(--bg-page);
+    background: linear-gradient(180deg, #FDF8F1 0%, #F9EFE2 100%);
     border-radius: var(--radius-md);
     padding: 12px;
+    border: 1px solid var(--border-light);
 }
 
 /* ========== 7. 多媒体区 ========== */
-.media-video {
-    margin-bottom: 20px;
-}
+.media-video { margin-bottom: 20px; }
 
 .media-video__player {
     width: 100%;
     max-height: 480px;
     border-radius: var(--radius-md);
-    background: #000;
+    background: #2A1D18;
 }
 
 .media-video__caption {
@@ -346,15 +336,17 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    font-style: italic;
 }
 
 .media-audio {
     display: flex;
     align-items: center;
     gap: 16px;
-    background: var(--bg-page);
-    padding: 12px 16px;
+    background: linear-gradient(90deg, #FDF8F1 0%, #F5E6D3 100%);
+    padding: 14px 18px;
     border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
 }
 
 .media-audio__player {
@@ -366,24 +358,29 @@
     font-size: 13px;
     color: var(--text-regular);
     white-space: nowrap;
+    font-style: italic;
 }
 
-/* ========== 8. 邮件订阅区 ========== */
+/* ========== 8. 邮件订阅区（浪漫渐变） ========== */
 .subscribe-section {
-    /* linear-gradient 渐变背景 */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #fff;
+    /* 玫瑰→淡紫浪漫渐变 */
+    background: linear-gradient(135deg, #B76E79 0%, #C9A96E 100%);
+    color: #FBF3E7;
     text-align: center;
+    border: none;
 }
 
 .subscribe-section__title {
-    font-size: 24px;
+    font-size: 26px;
     margin-bottom: 8px;
+    font-family: "Noto Serif SC", Georgia, serif;
+    letter-spacing: 4px;
 }
 
 .subscribe-section__desc {
-    opacity: 0.9;
-    margin-bottom: 24px;
+    opacity: 0.92;
+    margin-bottom: 26px;
+    font-style: italic;
 }
 
 .subscribe-section__form {
@@ -393,7 +390,7 @@
 }
 
 .subscribe-section__form .el-form-item__label {
-    color: #fff !important;
+    color: #FBF3E7 !important;
 }
 
 .subscribe-section__input :deep(.el-input__wrapper) {
@@ -402,9 +399,11 @@
 
 .subscribe-section__btn {
     width: 100%;
+    background: #3E2C25 !important;
+    border-color: #3E2C25 !important;
 }
 
-/* ========== 9. 侧边栏 aside ========== */
+/* ========== 9. 侧边栏 ========== */
 .sidebar {
     width: 300px;
     flex-shrink: 0;
@@ -415,42 +414,39 @@
 .sidebar__widget {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
-    padding: 20px;
+    padding: 22px;
     margin-bottom: 20px;
     box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
 }
 
 .sidebar__title {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     padding-bottom: 12px;
     border-bottom: 2px solid var(--border-light);
-}
-
-.rank-list {
-    counter-reset: rank;
+    font-family: "Noto Serif SC", Georgia, serif;
+    letter-spacing: 2px;
 }
 
 .rank-list__item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px dashed var(--border-light);
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--border-color);
 }
 
-.rank-list__item:last-child {
-    border-bottom: none;
-}
+.rank-list__item:last-child { border-bottom: none; }
 
 .rank-list__no {
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
     background: var(--bg-hover);
     color: var(--text-secondary);
     font-size: 12px;
@@ -459,12 +455,22 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    font-family: Georgia, serif;
 }
 
-/* :nth-child 为前三名标色 */
-.rank-list__no--1 { background: #E63946; color: #fff; }
-.rank-list__no--2 { background: #FF6B6B; color: #fff; }
-.rank-list__no--3 { background: #FF9D4D; color: #fff; }
+/* 前三名：暖金渐变 */
+.rank-list__no--1 {
+    background: linear-gradient(135deg, #D4A574, #B76E79);
+    color: #fff;
+}
+.rank-list__no--2 {
+    background: linear-gradient(135deg, #C9A96E, #A8875A);
+    color: #fff;
+}
+.rank-list__no--3 {
+    background: linear-gradient(135deg, #D4B896, #B89968);
+    color: #fff;
+}
 
 .rank-list__name {
     flex: 1;
@@ -476,41 +482,29 @@
 
 .rank-list__price {
     font-size: 13px;
-    color: var(--danger);
+    color: var(--primary);
     font-weight: 600;
+    font-family: Georgia, serif;
 }
 
-/* ========== 10. 响应式适配 ========== */
+/* ========== 10. 响应式 ========== */
 @media (max-width: 992px) {
-    .main-body {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        position: static;
-    }
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    .banner-slide__title {
-        font-size: 28px;
-    }
+    .main-body { flex-direction: column; }
+    .sidebar { width: 100%; position: static; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .banner-slide__title { font-size: 28px; letter-spacing: 3px; }
     .book-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 }
 
 @media (max-width: 576px) {
-    .book-list__item {
-        flex-direction: column;
-    }
+    .book-list__item { flex-direction: column; }
     .book-list__cover {
         width: 100%;
         height: auto;
-        max-height: 200px;
+        max-height: 220px;
         object-fit: contain;
     }
-    .book-list__actions {
-        flex-direction: row;
-    }
+    .book-list__actions { flex-direction: row; }
 }

@@ -110,6 +110,9 @@
             const FAV_KEY = 'moxiang_fav';
             const favs = ref(Store.storage.get(FAV_KEY, []));
 
+            // 当前登录用户
+            const loginUser = ref(Store.user.getCurrent());
+
             // 收藏变化时自动持久化
             watch(favs, function (val) {
                 Store.storage.set(FAV_KEY, val);
@@ -173,6 +176,18 @@
 
             function goAuth() {
                 window.location.href = 'login.html';
+            }
+
+            /** 退出登录 */
+            function handleLogout() {
+                Store.confirm('确定要退出登录吗？').then(function (ok) {
+                    if (!ok) return;
+                    Store.user.logout();
+                    Store.toast('已退出登录', 'success');
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 600);
+                });
             }
 
             /* ---------- 订阅表单（Element Plus Form 验证） ---------- */
@@ -283,8 +298,9 @@
                 activeMenu, searchKeyword, activeCategory,
                 categories, banners,
                 recommendBooks, rankBooks, filteredBooks,
+                loginUser,
                 getCoverUrl, isFav, toggleFav,
-                viewDetail, handleSearch, handleMenuSelect, goAuth,
+                viewDetail, handleSearch, handleMenuSelect, goAuth, handleLogout,
                 subscribeFormRef, subscribeForm, subscribeRules, handleSubscribe
             };
         }

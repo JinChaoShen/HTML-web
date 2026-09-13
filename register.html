@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册 - 墨香书阁</title>
+
+    <!-- 第三方库 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <script src="https://unpkg.com/element-plus/dist/index.full.min.js"></script>
+    <script src="https://unpkg.com/element-plus/dist/locale/zh-cn.min.js"></script>
+    <script src="https://unpkg.com/@element-plus/icons-vue/dist/index.iife.min.js"></script>
+
+    <!-- 样式 -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/page/login.css">
+</head>
+
+<body class="auth-body">
+    <!--
+      注册页 register.html
+      覆盖技术点：
+        - HTML5 form 表单（用户名 / 邮箱 / 手机号 / 密码 / 确认密码）
+        - type=email / type=tel 新特性
+        - JS 多字段验证（用户名唯一性 / 邮箱格式 / 手机号格式 / 密码一致性）
+        - localStorage 写入新用户
+    -->
+    <div id="app">
+        <a href="index.html" class="auth-back">
+            <el-icon><ArrowLeft /></el-icon>
+            返回首页
+        </a>
+
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-card__header">
+                    <a href="index.html" class="auth-card__logo">墨香书阁</a>
+                    <p class="auth-card__subtitle">创建新账号，开启阅读之旅</p>
+                </div>
+
+                <el-form ref="registerFormRef" :model="registerForm" :rules="registerRules"
+                         class="auth-card__form" @submit.prevent="handleRegister">
+                    <el-form-item prop="username">
+                        <el-input v-model="registerForm.username"
+                                  placeholder="用户名（2-16 位）"
+                                  size="large" clearable maxlength="16">
+                            <template #prefix><el-icon><User /></el-icon></template>
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item prop="email">
+                        <el-input v-model="registerForm.email"
+                                  type="email"
+                                  placeholder="邮箱地址"
+                                  size="large" clearable>
+                            <template #prefix><el-icon><Message /></el-icon></template>
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item prop="phone">
+                        <el-input v-model="registerForm.phone"
+                                  type="tel"
+                                  placeholder="手机号（选填）"
+                                  size="large" clearable maxlength="11">
+                            <template #prefix><el-icon><Phone /></el-icon></template>
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item prop="password">
+                        <el-input v-model="registerForm.password"
+                                  type="password"
+                                  placeholder="密码（至少 6 位）"
+                                  size="large" show-password>
+                            <template #prefix><el-icon><Lock /></el-icon></template>
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item prop="confirmPassword">
+                        <el-input v-model="registerForm.confirmPassword"
+                                  type="password"
+                                  placeholder="再次输入密码"
+                                  size="large" show-password>
+                            <template #prefix><el-icon><Lock /></el-icon></template>
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item prop="agreed">
+                        <el-checkbox v-model="registerForm.agreed">
+                            我已阅读并同意 <a href="javascript:;" class="auth-card__link">《用户协议》</a>
+                            和 <a href="javascript:;" class="auth-card__link">《隐私政策》</a>
+                        </el-checkbox>
+                    </el-form-item>
+
+                    <el-button type="primary" size="large" native-type="submit"
+                               class="auth-card__btn" :loading="loading">
+                        注 册
+                    </el-button>
+                </el-form>
+
+                <div class="auth-card__footer">
+                    已有账号？<a href="login.html" class="auth-card__link">直接登录</a>
+                </div>
+            </div>
+
+            <div class="auth-side">
+                <h2 class="auth-side__title">加入墨香书阁</h2>
+                <p class="auth-side__desc">
+                    注册即享：个性化推荐、书单收藏、新书订阅、书友交流。
+                </p>
+                <ul class="auth-side__list">
+                    <li>· 完全免费，即刻开始</li>
+                    <li>· 数据云端同步，多端通用</li>
+                    <li>· 关注喜欢的作者，第一时间获取新作</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/page/register.js"></script>
+</body>
+
+</html>

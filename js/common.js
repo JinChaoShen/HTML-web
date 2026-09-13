@@ -144,13 +144,83 @@
     }
 
     /* ============================================================
-     * 5. 暴露到全局
+     * 5. 用户管理（localStorage 模拟）
+     * ============================================================ */
+    var USERS_KEY = 'moxiang_users';
+    var LOGIN_KEY = 'moxiang_login_user';
+
+    var UserUtil = {
+        /** 获取全部用户 */
+        getAll: function () {
+            return StorageUtil.get(USERS_KEY, []);
+        },
+
+        /** 按账号（用户名或邮箱）查找用户 */
+        findByAccount: function (account) {
+            var users = this.getAll();
+            var lower = (account || '').toLowerCase();
+            return users.find(function (u) {
+                return u.username.toLowerCase() === lower ||
+                       u.email.toLowerCase() === lower;
+            }) || null;
+        },
+
+        /** 按用户名查找 */
+        findByUsername: function (username) {
+            var users = this.getAll();
+            var lower = (username || '').toLowerCase();
+            return users.find(function (u) {
+                return u.username.toLowerCase() === lower;
+            }) || null;
+        },
+
+        /** 按邮箱查找 */
+        findByEmail: function (email) {
+            var users = this.getAll();
+            var lower = (email || '').toLowerCase();
+            return users.find(function (u) {
+                return u.email.toLowerCase() === lower;
+            }) || null;
+        },
+
+        /** 新增用户（返回是否成功） */
+        add: function (user) {
+            var users = this.getAll();
+            users.push(user);
+            StorageUtil.set(USERS_KEY, users);
+            return true;
+        },
+
+        /** 获取当前登录用户 */
+        getCurrent: function () {
+            return StorageUtil.get(LOGIN_KEY, null);
+        },
+
+        /** 设置登录态 */
+        login: function (user) {
+            var safe = {
+                username: user.username,
+                email: user.email,
+                phone: user.phone || ''
+            };
+            StorageUtil.set(LOGIN_KEY, safe);
+        },
+
+        /** 退出登录 */
+        logout: function () {
+            StorageUtil.remove(LOGIN_KEY);
+        }
+    };
+
+    /* ============================================================
+     * 6. 暴露到全局
      * ============================================================ */
     global.Store = {
         validatePhone: validatePhone,
         validateEmail: validateEmail,
         validatePassword: validatePassword,
         storage: StorageUtil,
+        user: UserUtil,
         formatTime: formatTime,
         toast: toast,
         confirm: confirmDialog

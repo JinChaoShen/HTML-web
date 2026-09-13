@@ -7,7 +7,7 @@
     <meta name="description" content="墨香书阁 - 在线书店，提供文学、科幻、历史、计算机等各类图书">
     <title>墨香书阁 - 在线书店</title>
 
-    <!-- ========== 第三方库 CDN 引入（任务书：优先 CDN） ========== -->
+
     <!-- Vue3 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <!-- Element Plus 样式 + 组件库 + 中文语言包 -->
@@ -49,9 +49,23 @@
             <div class="container top-bar__inner">
                 <p class="top-bar__welcome">欢迎来到墨香书阁，让阅读成为一种生活方式</p>
                 <div class="top-bar__actions">
-                    <a href="login.html" class="top-bar__link">登录</a>
-                    <span class="top-bar__divider">|</span>
-                    <a href="register.html" class="top-bar__link">注册</a>
+                    <!-- 未登录：显示登录/注册 -->
+                    <template v-if="!loginUser">
+                        <a href="login.html" class="top-bar__link">登录</a>
+                        <span class="top-bar__divider">|</span>
+                        <a href="register.html" class="top-bar__link">注册</a>
+                    </template>
+                    <!-- 已登录：显示用户名 + 退出 -->
+                    <template v-else>
+                        <span class="top-bar__link">
+                            <el-icon :size="14">
+                                <User />
+                            </el-icon>
+                            {{ loginUser.username }}
+                        </span>
+                        <span class="top-bar__divider">|</span>
+                        <a href="javascript:;" class="top-bar__link" @click="handleLogout">退出</a>
+                    </template>
                 </div>
             </div>
         </div>
@@ -147,13 +161,11 @@
             <!-- ======= 三海报轮播 Banner（Element Plus Carousel） ======= -->
             <section class="banner-section" aria-label="首页轮播推荐">
                 <el-carousel height="420px" :interval="4000" arrow="hover" indicator-position="outside"
-                             class="banner-section__carousel">
+                    class="banner-section__carousel">
                     <el-carousel-item v-for="(banner, idx) in banners" :key="idx">
                         <!-- TODO: 替换为 assets/images/banner/banner-0X.webp（本地海报资源） -->
                         <div class="banner-slide" :style="{ background: banner.bg }">
-                            <img :src="banner.img" :alt="banner.title"
-                                 class="banner-slide__img"
-                                 loading="eager">
+                            <img :src="banner.img" :alt="banner.title" class="banner-slide__img" loading="eager">
                             <div class="banner-slide__text">
                                 <h2 class="banner-slide__title">{{ banner.title }}</h2>
                                 <p class="banner-slide__desc">{{ banner.desc }}</p>
